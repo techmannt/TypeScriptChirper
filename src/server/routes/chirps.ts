@@ -9,8 +9,8 @@ router.get('/:id', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  let chirps = chirpstore.GetChirps();
-  let chirpsData = Object.keys(chirps).map((chirp: any) => {
+  let chirps: any = chirpstore.GetChirps();
+  let chirpsData = Object.keys(chirps).map(chirp => {
     return {
       id: chirp,
       username: chirps[chirp].username,
@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   chirpstore.CreateChirp(req.body);
-  res.json('IT WORKED!');
+  res.json('Post successful!');
 });
 
 router.put('/:id', (req, res) => {
@@ -35,7 +35,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
   chirpstore.DeleteChirp(id);
-  res.json('deleted!');
+  res.json('Deleted!');
 });
 
 export default router;
