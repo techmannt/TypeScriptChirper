@@ -10,7 +10,7 @@ router.get('/:id', (req, res) => {
 
 router.get('/', (req, res) => {
   let chirps = chirpstore.GetChirps();
-  let chirpsData = Object.keys(chirps).map(chirp => {
+  let chirpsData = Object.keys(chirps).map((chirp: any) => {
     return {
       id: chirp,
       username: chirps[chirp].username,
