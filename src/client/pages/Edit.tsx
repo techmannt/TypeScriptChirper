@@ -12,9 +12,7 @@ class Edit extends React.Component<IEditProps, IEditState> {
 
   async componentDidMount() {
     try {
-      let chirpData = await fetch(`/api/chirps/${this.props.match.params.id}`, {
-        method: "GET"  // Make the GET request. No headers needed!
-      });
+      let chirpData = await fetch(`/api/chirps/${this.props.match.params.id}`);
       let chirpInfo = await chirpData.json();
       this.setState({
         username: chirpInfo.username,
@@ -65,17 +63,26 @@ class Edit extends React.Component<IEditProps, IEditState> {
 
   render() {
     return (
-      <form className="py-5 px-2">
-        <label><h4>Username:</h4>
-          <input type="text" className="form-control" name="username" value={this.state.username}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ username: e.target.value })} /></label>
-          <label><h4>Chirp:</h4>
-          <input type="text" className="form-control" name="message" value={this.state.message}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ message: e.target.value })} /></label>
+      <main className="container">
+        <section className="row justify-content-center my-2">
+          <div className="col-md-8">
+            <form className="form-group p-3 shadow border">
+              <label>Username:</label>
+              <input type="text" className="form-control" name="username" value={this.state.username}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ username: e.target.value })} />
+              <label>Chirp:</label>
+              <input type="text" className="form-control" name="message" value={this.state.message}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ message: e.target.value })} />
+              <div className="d-flex mt-3 justify-content-between">
+                <button className="btn btn-primary shadow" onClick={(e: React.MouseEvent<HTMLButtonElement>) => this.handleEdit(e)}>Save Edit</button>
+                <button className="btn btn-danger shadow" onClick={(e: React.MouseEvent<HTMLButtonElement>) => this.handleDelete(e)}>DELETE!</button>
+              </div>
+            </form>
 
-        <button className="btn btn-primary shadow" onClick={(e: React.MouseEvent<HTMLButtonElement>) => this.handleEdit(e)}>Save Edit</button>
-        <button className="btn btn-danger shadow" onClick={(e: React.MouseEvent<HTMLButtonElement>) => this.handleDelete(e)}>DELETE!</button>
-      </form>
+          </div>
+        </section>
+      </main>
+
     )
   }
 

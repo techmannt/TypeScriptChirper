@@ -38,18 +38,20 @@ class Home extends React.Component<IHomeProps, IHomeState> {
 
       });
       if (chirpData.ok) {
-        this.props.history.push("/");
+        let chirpData = await fetch('/api/chirps');
+        let chirpInfo = await chirpData.json();
+        this.setState({ chirpInfo, username: '', message: '' });
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-  handleChirpUsernameChange(e) {
+  handleChirpUsernameChange(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ username: e.target.value });
   }
 
-  handleChirpMessageChange(e) {
+  handleChirpMessageChange(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ message: e.target.value });
   }
 
@@ -59,13 +61,13 @@ class Home extends React.Component<IHomeProps, IHomeState> {
         <main className="container py-5">
 
           <div className="row">
-            <form className="d-flex align-content-start">
+            <form className="col-12 form-group p-3 shadow">
               <input className="form-control shadow" type="text" name="username" value={this.state.username} onChange={(event) => this.handleChirpUsernameChange(event)} placeholder="Enter your name" />
               <input className="form-control shadow" type="text" name="message" value={this.state.message} onChange={(event) => this.handleChirpMessageChange(event)} placeholder="Enter chirp" />
+              <button className="btn btn-primary" onClick={(e: React.MouseEvent<HTMLButtonElement>) => this.handleAdd(e)}>Submit it!</button>
             </form>
           </div>
-          <div className="row">
-            <button className="d-flex align-content-end row" onClick={(e: React.MouseEvent<HTMLButtonElement>) => this.handleAdd(e)}>Submit it!</button></div>
+
           <section className="py-4">
             {this.state.chirpInfo.map(chirp => {
               return (
@@ -77,7 +79,6 @@ class Home extends React.Component<IHomeProps, IHomeState> {
                     </div>
                     <div className="card-footer text-muted d-flex flex-row-reverse">
                       <Link className="btn btn-success" to={`/edit/${chirp.id}`}>Admin Options</Link>
-
                     </div>
                   </div>
                 </aside>
